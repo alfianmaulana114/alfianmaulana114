@@ -1,73 +1,77 @@
-<picture>
-  <source media="(prefers-color-scheme: dark)" srcset="assets/header-dark.svg">
-  <img src="assets/header-light.svg" alt="Alfian Eka Maulana — Fullstack Developer" width="100%">
-</picture>
+<h2>Hi, I'm Alfian <img src="assets/icon.svg" width="40" alt=""></h2>
+
+![GitHub followers](https://img.shields.io/github/followers/alfianmaulana114?style=flat-square&color=3B82F6&labelColor=6E7681)
+
+<p><img src="assets/typing.svg" alt="building &amp; shipping web apps end to end"></p>
+
+<img align="right" src="assets/illustration.svg" width="320" alt="code window">
+
+Fullstack developer based in Jakarta, Indonesia. I build and ship web
+applications **end to end** — database design, backend, frontend, and deployment.
+
+I'm an Information Systems student at Universitas Bina Sarana Informatika, and
+I'm currently going deeper into **cloud** and **scalable architecture**. Outside
+of code, I've led an editorial team and mentored students in web development.
+
+### A little more about me...
+
+```typescript
+const alfian = {
+  role: "Fullstack Developer",
+  location: "Jakarta, Indonesia",
+  education: "S1 Information Systems — Universitas Bina Sarana Informatika",
+  code: ["TypeScript", "PHP", "JavaScript"],
+  frameworks: ["Laravel", "Next.js", "Tailwind CSS"],
+  databases: ["MySQL", "PostgreSQL", "SQLite", "Redis"],
+  cloud: ["Google Cloud Platform"],
+  tools: ["Git", "GitHub", "Jira", "Trello", "Power BI"],
+  currentlyLearning: "scalable architecture & cloud-native apps",
+};
+```
+
+### Tech stack
+
+<img src="assets/stack.svg" alt="PHP, JavaScript, TypeScript, Laravel, Next.js, Tailwind CSS, MySQL, PostgreSQL, SQLite, Redis, Git, GitHub, Jira, Trello, Power BI">
+
+### GitHub stats
 
 <p align="center">
-<picture>
-  <source media="(prefers-color-scheme: dark)" srcset="assets/typing-dark.svg">
-  <img src="assets/typing-light.svg" alt="building &amp; shipping web apps end to end">
-</picture>
-</p>
-
-<picture>
-  <source media="(prefers-color-scheme: dark)" srcset="assets/divider-dark.svg">
-  <img src="assets/divider-light.svg" alt="" width="100%">
-</picture>
-
-<picture>
-  <source media="(prefers-color-scheme: dark)" srcset="assets/section-about-dark.svg">
-  <img src="assets/section-about-light.svg" alt="About">
-</picture>
-
-Fullstack developer focused on building and shipping web applications **end to end** —
-from database design and backend to frontend and deployment.
-
-I enjoy turning real problems into products that actually get used, and I'm currently
-going deeper into **cloud** and **scalable architecture**. Outside of code, I've led an
-editorial team and mentored students in web development.
-
-<picture>
-  <source media="(prefers-color-scheme: dark)" srcset="assets/section-stack-dark.svg">
-  <img src="assets/section-stack-light.svg" alt="Tech stack">
-</picture>
-
-<picture>
-  <source media="(prefers-color-scheme: dark)" srcset="assets/stack-dark.svg">
-  <img src="assets/stack-light.svg" alt="PHP, JavaScript, TypeScript, Laravel, Next.js, Tailwind CSS, MySQL, PostgreSQL, SQLite, Redis, Git, GitHub, Jira, Trello, Power BI">
-</picture>
-
-<picture>
-  <source media="(prefers-color-scheme: dark)" srcset="assets/section-stats-dark.svg">
-  <img src="assets/section-stats-light.svg" alt="GitHub stats">
-</picture>
-
-<p align="center">
-<picture>
-  <source media="(prefers-color-scheme: dark)" srcset="https://github-readme-stats.vercel.app/api?username=alfianmaulana114&show_icons=true&hide_border=true&include_all_commits=true&count_private=true&bg_color=0D1117&title_color=3B82F6&text_color=F0F6FC&icon_color=3B82F6">
-  <img height="165" src="https://github-readme-stats.vercel.app/api?username=alfianmaulana114&show_icons=true&hide_border=true&include_all_commits=true&count_private=true&bg_color=FFFFFF&title_color=2563EB&text_color=111111&icon_color=2563EB" alt="GitHub stats">
-</picture>
-<picture>
-  <source media="(prefers-color-scheme: dark)" srcset="https://github-readme-stats.vercel.app/api/top-langs/?username=alfianmaulana114&layout=compact&hide_border=true&langs_count=8&bg_color=0D1117&title_color=3B82F6&text_color=F0F6FC">
-  <img height="165" src="https://github-readme-stats.vercel.app/api/top-langs/?username=alfianmaulana114&layout=compact&hide_border=true&langs_count=8&bg_color=FFFFFF&title_color=2563EB&text_color=111111" alt="Top languages">
-</picture>
+  <img height="165" src="https://github-readme-stats.vercel.app/api?username=alfianmaulana114&show_icons=true&hide_border=true&include_all_commits=true&count_private=true&bg_color=00000000&title_color=3B82F6&text_color=6E7681&icon_color=3B82F6" alt="GitHub stats">
+  <img height="165" src="https://github-readme-stats.vercel.app/api/top-langs/?username=alfianmaulana114&layout=compact&hide_border=true&langs_count=8&bg_color=00000000&title_color=3B82F6&text_color=6E7681" alt="Top languages">
 </p>
 
 <p align="center">
-<picture>
-  <source media="(prefers-color-scheme: dark)" srcset="https://streak-stats.demolab.com/?user=alfianmaulana114&hide_border=true&background=0D1117&border=30363D&stroke=F0F6FC&ring=3B82F6&fire=3B82F6&currStreakNum=F0F6FC&sideNums=F0F6FC&currStreakLabel=3B82F6&sideLabels=8B949E&dates=8B949E">
-  <img src="https://streak-stats.demolab.com/?user=alfianmaulana114&hide_border=true&background=FFFFFF&border=D0D7DE&stroke=111111&ring=2563EB&fire=2563EB&currStreakNum=111111&sideNums=111111&currStreakLabel=2563EB&sideLabels=57606A&dates=57606A" alt="GitHub streak">
-</picture>
+  <img src="https://streak-stats.demolab.com/?user=alfianmaulana114&hide_border=true&background=00000000&stroke=6E7681&ring=3B82F6&fire=3B82F6&currStreakNum=6E7681&sideNums=6E7681&currStreakLabel=3B82F6&sideLabels=6E7681&dates=6E7681" alt="GitHub streak">
 </p>
 
-<picture>
-  <source media="(prefers-color-scheme: dark)" srcset="assets/section-contact-dark.svg">
-  <img src="assets/section-contact-light.svg" alt="Contact">
-</picture>
+### Let's connect
 
-Open to new projects, creative ideas, and career opportunities in tech.
+I'm always open to new projects, creative ideas, and career opportunities in tech.
 
-[![Portfolio](https://img.shields.io/badge/alfianmaulana.me-2563EB?style=flat-square&logo=googlechrome&logoColor=white)](https://alfianmaulana.me)
-[![LinkedIn](https://img.shields.io/badge/alfianekamaulana-2563EB?style=flat-square&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/alfianekamaulana)
-[![GitHub](https://img.shields.io/badge/alfianmaulana114-2563EB?style=flat-square&logo=github&logoColor=white)](https://github.com/alfianmaulana114)
-[![Email](https://img.shields.io/badge/alfianmaulana114@gmail.com-2563EB?style=flat-square&logo=gmail&logoColor=white)](mailto:alfianmaulana114@gmail.com)
+[![Portfolio](https://img.shields.io/badge/alfianmaulana.me-3B82F6?style=flat-square&logo=googlechrome&logoColor=white)](https://alfianmaulana.me)
+[![LinkedIn](https://img.shields.io/badge/alfianekamaulana-3B82F6?style=flat-square&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/alfianekamaulana)
+[![GitHub](https://img.shields.io/badge/alfianmaulana114-3B82F6?style=flat-square&logo=github&logoColor=white)](https://github.com/alfianmaulana114)
+[![Email](https://img.shields.io/badge/alfianmaulana114@gmail.com-3B82F6?style=flat-square&logo=gmail&logoColor=white)](mailto:alfianmaulana114@gmail.com)
+
+<details>
+<summary>ASCII art</summary>
+
+```
+  ###  #     ##### #####  ###  #   #
+ #   # #     #       #   #   # ##  #
+ ##### #     ####    #   ##### # # #
+ #   # #     #       #   #   # #  ##
+ #   # ##### #     ##### #   # #   #
+```
+
+</details>
+
+<details>
+<summary>Credits</summary>
+
+- Display fonts: **Press Start 2P** and **VT323**, licensed under the [SIL Open Font License 1.1](tools/fonts/) — full licence texts are in `tools/fonts/`.
+- Icons: [Simple Icons](https://simpleicons.org/) (CC0 1.0).
+- Stats cards: [github-readme-stats](https://github.com/anuraghazra/github-readme-stats) and [github-readme-streak-stats](https://github.com/DenverCoder1/github-readme-streak-stats) (MIT).
+- All artwork in `assets/` is generated by [`tools/generate_assets.py`](tools/generate_assets.py).
+
+</details>

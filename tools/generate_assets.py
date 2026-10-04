@@ -1,15 +1,15 @@
 #!/usr/bin/env python3
 """
-Generate SVG assets for the GitHub profile README.
+Generate the SVG assets used by the profile README.
 
-Design language (restrained neobrutalism):
-  - monochrome base (black / white) with a single blue accent
-  - thin solid borders, no scattered decoration
-  - pixel display font for headings, terminal font for meta text
-  - fonts subset to ASCII and embedded as base64 woff2 so the SVGs render
-    standalone on GitHub (no external font requests)
-  - every asset ships light + dark, selected via
-    <picture><source media="(prefers-color-scheme: dark)">
+Every asset is *theme-neutral*: it is designed to read correctly on both the
+light and the dark GitHub theme, so the README only needs plain <img> tags
+(no <picture> / prefers-color-scheme boilerplate).
+
+Fonts (Press Start 2P, VT323) are subset to ASCII and embedded as base64 woff2
+so the SVGs render standalone on GitHub with no external font requests.
+Both fonts are licensed under the SIL Open Font License 1.1 — see the
+OFL-*.txt files next to them in tools/fonts/.
 
 Run:  python tools/generate_assets.py
 """
@@ -28,14 +28,14 @@ ASSET_DIR = os.path.join(ROOT, "assets")
 PSP_TTF = os.path.join(FONT_DIR, "PressStart2P-Regular.ttf")
 VT_TTF = os.path.join(FONT_DIR, "VT323-Regular.ttf")
 
-THEMES = {
-    "light": dict(card="#FFFFFF", border="#111111", text="#111111",
-                  muted="#57606A", line="#D0D7DE", shadow="#111111", accent="#2563EB"),
-    "dark":  dict(card="#0D1117", border="#E6EDF3", text="#F0F6FC",
-                  muted="#8B949E", line="#30363D", shadow="#30363D", accent="#3B82F6"),
-}
+# theme-neutral palette: every colour must read on white *and* on #0d1117
+DARK = "#0D1117"
+DARK2 = "#161B22"
+WHITE = "#FFFFFF"
+ACCENT = "#3B82F6"
+ACCENT_SOFT = "#60A5FA"
+NEUTRAL = "#6E7681"
 
-# flat, ordered list -> rendered as a uniform 5 x 3 grid
 STACK_ITEMS = [
     ("php", "PHP"), ("javascript", "JavaScript"), ("typescript", "TypeScript"),
     ("laravel", "Laravel"), ("nextdotjs", "Next.js"),
@@ -44,9 +44,6 @@ STACK_ITEMS = [
     ("git", "Git"), ("github", "GitHub"), ("jira", "Jira"), ("trello", "Trello"),
     ("powerbi", "Power BI"),
 ]
-
-SECTIONS = [("about", "ABOUT_ME"), ("stack", "TECH_STACK"),
-            ("stats", "GITHUB_STATS"), ("contact", "CONTACT")]
 
 
 # ------------------------------------------------------------- font utils ---
@@ -67,17 +64,14 @@ def font_to_woff2_b64(path, text):
 
 
 def text_width(path, s, size):
-    """Advance width of a string in px, measured from the real font metrics."""
     font = TTFont(path)
     cmap = font.getBestCmap()
     hmtx = font["hmtx"]
     upm = font["head"].unitsPerEm
-    total = sum(hmtx[cmap[ord(c)]][0] for c in s if ord(c) in cmap)
-    return total / upm * size
+    return sum(hmtx[cmap[ord(c)]][0] for c in s if ord(c) in cmap) / upm * size
 
 
-def font_face_css(psp_b64, vt_b64, extra=""):
-    # built by concatenation (not %-formatting) so CSS can contain raw '%'
+def font_css(psp_b64, vt_b64, extra=""):
     return (
         "@font-face{font-family:'PSP';font-style:normal;font-weight:400;"
         "src:url(data:font/woff2;base64," + psp_b64 + ") format('woff2');}"
@@ -88,19 +82,17 @@ def font_face_css(psp_b64, vt_b64, extra=""):
     )
 
 
-def psp_css(psp_b64):
-    return ("@font-face{font-family:'PSP';font-style:normal;font-weight:400;"
-            "src:url(data:font/woff2;base64," + psp_b64 + ") format('woff2');}"
-            ".psp{font-family:'PSP',monospace;}")
-
-
 # ---------------------------------------------------------------- helpers ---
-def svg(width, height, label, body, css, extra_defs=""):
+def esc(s):
+    return s.replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;")
+
+
+def svg(width, height, label, body, css):
     return (
         '<svg xmlns="http://www.w3.org/2000/svg" width="%d" height="%d" '
         'viewBox="0 0 %d %d" role="img" aria-label="%s">'
-        "<defs><style>%s</style>%s</defs>%s</svg>"
-    ) % (width, height, width, height, label, css, extra_defs, body)
+        "<defs><style>%s</style></defs>%s</svg>"
+    ) % (width, height, width, height, label, css, body)
 
 
 def rect(x, y, w, h, fill, stroke=None, sw=0, cls=None):
@@ -112,43 +104,49 @@ def rect(x, y, w, h, fill, stroke=None, sw=0, cls=None):
     return s + "/>"
 
 
-def esc(s):
-    """Escape XML special characters in text nodes."""
-    return s.replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;")
-
-
 def text(x, y, s, size, fill, cls="psp", anchor="middle"):
     return ('<text x="%g" y="%g" class="%s" font-size="%g" fill="%s" '
             'text-anchor="%s">%s</text>') % (x, y, cls, size, fill, anchor, esc(s))
 
 
-# ----------------------------------------------------------------- header ---
-def build_header(t):
-    W, H = 1000, 200
-    prompt = "alfian@github:~$ whoami"
-    px = 18 + text_width(VT_TTF, prompt, 20) + 8
-    blink = ("@keyframes blink{0%,49%{opacity:1}50%,100%{opacity:0}}"
-             ".cursor{animation:blink 1.1s steps(1) infinite;}")
-    b = [
-        rect(10, 10, 980, 176, t["shadow"]),
-        rect(0, 0, 980, 176, t["card"], t["border"], 4),
-        rect(2, 2, 976, 32, t["border"]),
-        text(18, 24, prompt, 20, t["card"], "vt", "start"),
-        rect(px, 10, 10, 16, t["accent"], cls="cursor"),
-        text(490, 100, "ALFIAN EKA MAULANA", 36, t["text"]),
-        text(490, 134, "Fullstack Developer  \u00b7  Jakarta, Indonesia", 28, t["muted"], "vt"),
-        text(490, 163, "github.com/alfianmaulana114  \u00b7  alfianmaulana.me", 20, t["muted"], "vt"),
-    ]
-    return svg(W, H, "Alfian Eka Maulana - Fullstack Developer", "".join(b),
-               font_face_css(t["_psp"], t["_vt"], blink))
+# ------------------------------------------------------------------- icon ---
+def build_icon(psp):
+    """Tiny terminal-prompt mark used next to the greeting."""
+    b = [rect(4, 4, 36, 36, DARK),
+         rect(0, 0, 36, 36, ACCENT),
+         text(18, 26, ">", 20, WHITE)]
+    return svg(40, 40, "terminal prompt", "".join(b), font_css(psp, psp))
 
 
-# ------------------------------------------------------ animated typing ---
-def build_typing(t):
-    """Typewriter line, one <text> per character with its own opacity
-    keyframes. Deliberately avoids SMIL, <mask> and CSS `width` inside
-    <clipPath>: none of those animate when the SVG is loaded through <img>
-    (which is exactly how GitHub renders README images)."""
+# ----------------------------------------------------------- illustration ---
+def build_illustration(psp, vt):
+    """Abstract code window, floated to the right of the intro."""
+    W, H = 320, 250
+    b = [rect(8, 8, 304, 234, DARK)]
+    b.append(rect(0, 0, 304, 234, DARK, ACCENT, 3))
+    b.append(rect(3, 3, 298, 30, DARK2))
+    for i, c in enumerate((ACCENT, NEUTRAL, NEUTRAL)):
+        b.append(rect(16 + i * 16, 13, 9, 9, c))
+    b.append(text(66, 24, "alfian.ts", 18, NEUTRAL, "vt", "start"))
+
+    lines = [(16, 96, ACCENT), (32, 160, NEUTRAL), (32, 120, ACCENT),
+             (48, 80, NEUTRAL), (16, 140, ACCENT), (32, 200, NEUTRAL),
+             (16, 84, ACCENT)]
+    for i, (ind, w, c) in enumerate(lines):
+        b.append(rect(ind, 52 + i * 24, w, 9, c))
+    b.append(rect(112, 52 + 6 * 24, 9, 9, ACCENT_SOFT, cls="cur"))
+    css = font_css(psp, vt,
+                   "@keyframes blink{0%,49%{opacity:1}50%,100%{opacity:0}}"
+                   ".cur{animation:blink 1.1s steps(1) infinite;}")
+    return svg(W, H, "code window", "".join(b), css)
+
+
+# ---------------------------------------------------------------- typing ---
+def build_typing(psp, vt):
+    """Typewriter line: one <text> per character with its own opacity
+    keyframes. SMIL, <mask> internals and CSS `width` inside <clipPath> do not
+    animate when an SVG is loaded through <img> (how GitHub renders README
+    images), so this is the approach that actually works."""
     line = "building & shipping web apps end to end"
     size, prompt, dur = 28, ">", 7
     n = len(line)
@@ -165,46 +163,27 @@ def build_typing(t):
 
     rules, elems = [], []
     for i, ch in enumerate(line):
-        a = 45.0 * (i + 1) / n                      # appears
-        v = 82.0 + 16.0 * (n - i) / n               # disappears (reverse order)
+        a = 45.0 * (i + 1) / n
+        v = 82.0 + 16.0 * (n - i) / n
         rules.append("@keyframes c%d{0%%{opacity:0}%.2f%%{opacity:0}%.2f%%{opacity:1}"
                      "%.2f%%{opacity:1}%.2f%%{opacity:0}100%%{opacity:0}}"
                      % (i, max(a - 0.05, 0.0), a, v, v + 0.05))
         rules.append(".c%d{animation:c%d %ds infinite;}" % (i, i, dur))
         if ch.strip():
             elems.append('<text class="vt c%d" x="%.1f" y="%d" font-size="%d" '
-                         'fill="%s">%s</text>' % (i, xs[i], ty, size, t["muted"], esc(ch)))
+                         'fill="%s">%s</text>' % (i, xs[i], ty, size, ACCENT_SOFT, esc(ch)))
 
-    css = font_face_css(t["_psp"], t["_vt"],
+    css = font_css(psp, vt,
         "@keyframes blink{0%,49%{opacity:1}50%,100%{opacity:0}}"
         ".cursor{animation:blink 1.1s steps(1) infinite;}" + "".join(rules))
-    b = [
-        text(0, ty, prompt, size, t["accent"], "vt", "start"),
-        "".join(elems),
-        rect(cx, ty - 20, 10, 22, t["accent"], cls="cursor"),
-    ]
+    b = [text(0, ty, prompt, size, ACCENT, "vt", "start"),
+         "".join(elems),
+         rect(cx, ty - 20, 10, 22, ACCENT, cls="cursor")]
     return svg(W, H, "typing", "".join(b), css)
 
 
-# ---------------------------------------------------------------- section ---
-def build_section(label, t, width=280):
-    b = [
-        rect(6, 6, width, 40, t["shadow"]),
-        rect(0, 0, width, 40, t["card"], t["border"], 4),
-        rect(14, 12, 16, 16, t["accent"], t["border"], 2),
-        text(46, 27, label, 16, t["text"], "psp", "start"),
-    ]
-    return svg(width, 52, label, "".join(b), psp_css(t["_psp"]))
-
-
-# ---------------------------------------------------------------- divider ---
-def build_divider(t):
-    W = 1000
-    return svg(W, 14, "divider", "".join(rect(x, 3, 8, 8, t["line"]) for x in range(0, W, 16)), "")
-
-
 # ------------------------------------------------------------- tech grid ---
-def build_stack(icons, t):
+def build_stack(icons, psp):
     cols, cell, size, label = 5, 160, 26, 11
     row = 78
     rows = (len(STACK_ITEMS) + cols - 1) // cols
@@ -215,9 +194,9 @@ def build_stack(icons, t):
         cx = c * cell + cell / 2
         iy = r * row + 14
         b.append('<g transform="translate(%g,%g) scale(%g)"><path d="%s" fill="%s"/></g>'
-                 % (cx - size / 2, iy, size / 24.0, icons[slug], t["text"]))
-        b.append(text(cx, iy + size + 16, name, label, t["text"]))
-    return svg(W, H, "Tech stack", "".join(b), psp_css(t["_psp"]))
+                 % (cx - size / 2, iy, size / 24.0, icons[slug], ACCENT))
+        b.append(text(cx, iy + size + 16, name, label, NEUTRAL))
+    return svg(W, H, "Tech stack", "".join(b), font_css(psp, psp))
 
 
 # ------------------------------------------------------------------- main ---
@@ -227,26 +206,20 @@ def main():
 
     psp = font_to_woff2_b64(PSP_TTF,
                             "".join(n for _, n in STACK_ITEMS) +
-                            "ALFIANEKMAULNABCDEFGHIJKLMNOPQRSTUVWXYZ_")
+                            ">alfian.tsABCDEFGHIJKLMNOPQRSTUVWXYZ")
     vt = font_to_woff2_b64(VT_TTF,
-                           "alfian@github:~$ whoami Fullstack Developer Jakarta Indonesia "
-                           "github.com/alfianmaulana114  \u00b7  alfianmaulana.me "
-                           "> building & shipping web apps end to end")
+                           "> alfian.ts building & shipping web apps end to end")
 
-    files = {}
-    for name, t in THEMES.items():
-        t = dict(t, _psp=psp, _vt=vt)
-        files["header-%s.svg" % name] = build_header(t)
-        files["typing-%s.svg" % name] = build_typing(t)
-        files["divider-%s.svg" % name] = build_divider(t)
-        files["stack-%s.svg" % name] = build_stack(icons, t)
-        for key, label in SECTIONS:
-            files["section-%s-%s.svg" % (key, name)] = build_section(label, t)
-
+    files = {
+        "icon.svg": build_icon(psp),
+        "illustration.svg": build_illustration(psp, vt),
+        "typing.svg": build_typing(psp, vt),
+        "stack.svg": build_stack(icons, psp),
+    }
     for fname, content in sorted(files.items()):
         with open(os.path.join(ASSET_DIR, fname), "w", encoding="utf-8") as f:
             f.write(content)
-        print("wrote assets/%-28s %3d KB" % (fname, len(content) // 1024))
+        print("wrote assets/%-20s %3d KB" % (fname, len(content) // 1024))
 
 
 if __name__ == "__main__":
