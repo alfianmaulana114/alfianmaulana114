@@ -1,19 +1,22 @@
 #!/usr/bin/env python3
 """
-Generate neobrutalist + pixel SVG assets for the GitHub profile README.
+Generate SVG assets for the GitHub profile README.
 
-Design language:
-  - thick black borders, hard (un-blurred) offset shadows
-  - bright saturated colors on cream paper
-  - pixel fonts (Press Start 2P for headings, VT323 for terminal text)
+Design language (restrained neobrutalism):
+  - monochrome base (black / white) with a single blue accent
+  - thin solid borders, no scattered decoration
+  - pixel display font for headings, terminal font for meta text
   - fonts are subset to ASCII and embedded as base64 woff2 so the SVGs
-    render standalone on GitHub (no external font requests).
+    render standalone on GitHub (no external font requests)
+  - every asset ships in a light and a dark variant, selected in the
+    README through <picture media="(prefers-color-scheme: dark)">
 
 Run:  python tools/generate_assets.py
 """
 
 import base64
 import io
+import json
 import os
 
 from fontTools import subset
@@ -23,46 +26,49 @@ ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 FONT_DIR = os.path.join(ROOT, "tools", "fonts")
 ASSET_DIR = os.path.join(ROOT, "assets")
 
-# ---------------------------------------------------------------- palette ---
-INK = "#111111"
-PAPER = "#FFF8E7"
-YELLOW = "#FFD23F"
-CYAN = "#3DDCFF"
-PINK = "#FF5CA8"
-LIME = "#A8FF3E"
-PURPLE = "#B58CFF"
-ORANGE = "#FF8A3D"
-PALETTE = [INK, YELLOW, CYAN, PINK, LIME, PURPLE, ORANGE]
+THEMES = {
+    "light": dict(card="#FFFFFF", border="#111111", text="#111111",
+                  muted="#57606A", line="#D0D7DE", shadow="#111111", accent="#2563EB"),
+    "dark":  dict(card="#0D1117", border="#E6EDF3", text="#F0F6FC",
+                  muted="#8B949E", line="#30363D", shadow="#30363D", accent="#3B82F6"),
+}
+
+STACK = [
+    ("LANGUAGES", [("php", "PHP"), ("javascript", "JavaScript"), ("typescript", "TypeScript")]),
+    ("FRAMEWORKS", [("laravel", "Laravel"), ("nextdotjs", "Next.js"), ("tailwindcss", "Tailwind CSS")]),
+    ("DATABASES", [("mysql", "MySQL"), ("postgresql", "PostgreSQL"), ("sqlite", "SQLite"), ("redis", "Redis")]),
+    ("TOOLS", [("git", "Git"), ("github", "GitHub"), ("jira", "Jira"), ("trello", "Trello"), ("powerbi", "Power BI")]),
+]
 
 
-def font_to_woff2_b64(filename: str, text: str) -> str:
-    """Subset a TTF to the given text + printable ASCII, return base64 woff2."""
+# ------------------------------------------------------------- font embed ---
+def font_to_woff2_b64(filename, text):
     font = TTFont(os.path.join(FONT_DIR, filename))
     chars = set(text) | {chr(c) for c in range(0x20, 0x7F)}
     options = subset.Options()
     options.flavor = "woff2"
     options.desubroutinize = True
     options.layout_features = ["*"]
-    subsetter = subset.Subsetter(options=options)
-    subsetter.populate(text="".join(sorted(chars)))
-    subsetter.subset(font)
+    sub = subset.Subsetter(options=options)
+    sub.populate(text="".join(sorted(chars)))
+    sub.subset(font)
     font.flavor = "woff2"
     buf = io.BytesIO()
     font.save(buf)
     return base64.b64encode(buf.getvalue()).decode("ascii")
 
 
-def font_face_css(psp_b64: str, vt_b64: str) -> str:
+def font_face_css(psp_b64, vt_b64):
     return (
         "@font-face{font-family:'PSP';font-style:normal;font-weight:400;"
         "src:url(data:font/woff2;base64,%s) format('woff2');}"
         "@font-face{font-family:'VT';font-style:normal;font-weight:400;"
         "src:url(data:font/woff2;base64,%s) format('woff2');}"
-        ".psp{font-family:'PSP',monospace;}"
-        ".vt{font-family:'VT',monospace;}"
+        ".psp{font-family:'PSP',monospace;}.vt{font-family:'VT',monospace;}"
     ) % (psp_b64, vt_b64)
 
 
+# ---------------------------------------------------------------- helpers ---
 def svg(width, height, label, body, css):
     return (
         '<svg xmlns="http://www.w3.org/2000/svg" width="%d" height="%d" '
@@ -78,94 +84,100 @@ def rect(x, y, w, h, fill, stroke=None, sw=0):
     return s + "/>"
 
 
-def text(x, y, s, size, fill, cls="psp", anchor="middle", spacing=None):
-    t = '<text x="%g" y="%g" class="%s" font-size="%g" fill="%s" text-anchor="%s"' % (
-        x, y, cls, size, fill, anchor,
-    )
-    if spacing:
-        t += ' letter-spacing="%g"' % spacing
-    return t + ">%s</text>" % s
+def text(x, y, s, size, fill, cls="psp", anchor="middle"):
+    return ('<text x="%g" y="%g" class="%s" font-size="%g" fill="%s" '
+            'text-anchor="%s">%s</text>') % (x, y, cls, size, fill, anchor, s)
 
 
 # ----------------------------------------------------------------- header ---
-def build_header(psp_b64, vt_b64):
-    W, H = 1000, 300
-    b = []
-    b.append(rect(28, 28, 944, 256, INK))                       # hard shadow
-    b.append(rect(16, 16, 944, 256, PAPER, INK, 6))             # card
-    b.append(rect(16, 16, 944, 54, CYAN, INK, 6))               # title bar
-    for i, c in enumerate((PINK, YELLOW, LIME)):                # window dots
-        b.append(rect(40 + i * 22, 37, 13, 13, c, INK, 2))
-    b.append(text(122, 55, "alfian@github:~$ whoami", 27, INK, "vt", "start"))
-    for r in range(2):                                          # title-bar texture
-        for c in range(5):
-            b.append(rect(842 + c * 22, 32 + r * 16, 10, 10, INK))
-
-    # name on a yellow chip
-    b.append(rect(154, 104, 692, 54, YELLOW, INK, 4))
-    b.append(text(500, 143, "ALFIAN EKA MAULANA", 36, INK))
-    # role chip
-    b.append(rect(340, 182, 320, 38, PINK, INK, 4))
-    b.append(text(500, 209, "FULLSTACK DEVELOPER", 15, INK))
-    # footer line
-    b.append(text(500, 252, "// build. ship. learn. repeat.", 25, INK, "vt"))
-
-    # pixel decorations
-    b.append(rect(896, 96, 18, 18, LIME, INK, 3))
-    b.append(rect(872, 120, 18, 18, PURPLE, INK, 3))
-    b.append(rect(58, 226, 18, 18, ORANGE, INK, 3))
-    b.append(rect(82, 202, 18, 18, CYAN, INK, 3))
-    return svg(W, H, "Alfian Eka Maulana - Fullstack Developer",
-               "".join(b), font_face_css(psp_b64, vt_b64))
+def build_header(t):
+    W, H = 1000, 200
+    b = [
+        rect(10, 10, 980, 176, t["shadow"]),
+        rect(0, 0, 980, 176, t["card"], t["border"], 4),
+        rect(2, 2, 976, 32, t["border"]),
+        text(18, 24, "alfian@github:~$ whoami", 20, t["card"], "vt", "start"),
+        text(490, 100, "ALFIAN EKA MAULANA", 36, t["text"]),
+        text(490, 134, "Fullstack Developer  \u00b7  Jakarta, Indonesia", 28, t["muted"], "vt"),
+        text(490, 163, "github.com/alfianmaulana114  \u00b7  alfianmaulana.me", 20, t["muted"], "vt"),
+    ]
+    return svg(W, H, "Alfian Eka Maulana - Fullstack Developer", "".join(b),
+               font_face_css(t["_psp"], t["_vt"]))
 
 
-# --------------------------------------------------------------- sections ---
-def build_section(label, color, psp_b64):
-    W, H = 480, 64
-    b = []
-    b.append(rect(8, 8, 464, 48, INK))
-    b.append(rect(0, 0, 464, 48, color, INK, 5))
-    b.append(text(24, 33, ">", 18, INK, "psp", "start"))
-    b.append(text(56, 33, label, 18, INK, "psp", "start"))
-    for i in range(3):                                          # little menu icon
-        b.append(rect(414 + i * 16, 19, 12, 12, INK))
-    css = "@font-face{font-family:'PSP';font-style:normal;font-weight:400;" \
-          "src:url(data:font/woff2;base64,%s) format('woff2');}.psp{font-family:'PSP',monospace;}" % psp_b64
+# ---------------------------------------------------------------- section ---
+def build_section(label, t, width=280):
+    W, H = width, 52
+    b = [
+        rect(6, 6, width, 40, t["shadow"]),
+        rect(0, 0, width, 40, t["card"], t["border"], 4),
+        rect(14, 12, 16, 16, t["accent"], t["border"], 2),
+        text(46, 27, label, 16, t["text"], "psp", "start"),
+    ]
+    css = ("@font-face{font-family:'PSP';font-style:normal;font-weight:400;"
+           "src:url(data:font/woff2;base64,%s) format('woff2');}"
+           ".psp{font-family:'PSP',monospace;}") % t["_psp"]
     return svg(W, H, label, "".join(b), css)
 
 
-def build_divider():
-    W, H = 1000, 24
-    b = []
-    x, i = 0, 0
-    while x + 16 <= W:
-        b.append(rect(x, 4, 16, 16, PALETTE[i % len(PALETTE)]))
-        x += 24
-        i += 1
+# ---------------------------------------------------------------- divider ---
+def build_divider(t):
+    W, H = 1000, 14
+    b = [rect(x, 3, 8, 8, t["line"]) for x in range(0, W, 16)]
     return svg(W, H, "divider", "".join(b), "")
 
 
+# ------------------------------------------------------------ tech stack ---
+def build_stack(icons, t):
+    cell, row, size = 170, 104, 30
+    W = max(len(items) for _, items in STACK) * cell
+    H = row * len(STACK)
+    b = []
+    for r, (cat, items) in enumerate(STACK):
+        y = r * row
+        b.append(text(0, y + 18, cat, 16, t["accent"], "psp", "start"))
+        for i, (slug, name) in enumerate(items):
+            cx = i * cell + cell / 2
+            s = size / 24.0
+            b.append('<g transform="translate(%g,%g) scale(%g)">'
+                     '<path d="%s" fill="%s"/></g>'
+                     % (cx - size / 2, y + 36, s, icons[slug], t["text"]))
+            b.append(text(cx, y + 84, name, 12, t["text"]))
+    css = ("@font-face{font-family:'PSP';font-style:normal;font-weight:400;"
+           "src:url(data:font/woff2;base64,%s) format('woff2');}"
+           ".psp{font-family:'PSP',monospace;}") % t["_psp"]
+    return svg(W, H, "Tech stack", "".join(b), css)
+
+
+# ------------------------------------------------------------------- main ---
 def main():
     os.makedirs(ASSET_DIR, exist_ok=True)
-    psp_b64 = font_to_woff2_b64("PressStart2P-Regular.ttf", "ALFIANEKMAUL")
-    vt_b64 = font_to_woff2_b64("VT323-Regular.ttf", "alfian@github:~$ whoami")
+    icons = json.load(open(os.path.join(ROOT, "tools", "icons.json"), encoding="utf-8"))
 
-    files = {"header.svg": build_header(psp_b64, vt_b64), "divider.svg": build_divider()}
-    sections = [
-        ("section-about.svg", "ABOUT_ME", CYAN),
-        ("section-stack.svg", "TECH_STACK", LIME),
-        ("section-experience.svg", "EXPERIENCE", YELLOW),
-        ("section-projects.svg", "PROJECTS", PINK),
-        ("section-achievements.svg", "ACHIEVEMENTS", ORANGE),
-        ("section-contact.svg", "CONTACT", PURPLE),
-    ]
-    for fname, label, color in sections:
-        files[fname] = build_section(label, color, psp_b64)
+    all_text = "".join(n for _, items in STACK for _, n in items) + \
+               "ALFIAN EK MAULNA" + "LANGUAGESFRAMEWORKSDATABASESTOOLS" + \
+               "ABCDEFGHIJKLMNOPQRSTUVWXYZ_"
+    psp = font_to_woff2_b64("PressStart2P-Regular.ttf", all_text)
+    vt = font_to_woff2_b64("VT323-Regular.ttf",
+                           "alfian@github:~$ whoami Fullstack Developer Jakarta Indonesia "
+                           "github.com/alfianmaulana114  \u00b7  alfianmaulana.me")
 
-    for fname, content in files.items():
+    sections = [("about", "ABOUT_ME"), ("stack", "TECH_STACK"), ("experience", "EXPERIENCE"),
+                ("projects", "PROJECTS"), ("achievements", "ACHIEVEMENTS"), ("contact", "CONTACT")]
+
+    files = {}
+    for name, t in THEMES.items():
+        t = dict(t, _psp=psp, _vt=vt)
+        files["header-%s.svg" % name] = build_header(t)
+        files["divider-%s.svg" % name] = build_divider(t)
+        files["stack-%s.svg" % name] = build_stack(icons, t)
+        for key, label in sections:
+            files["section-%s-%s.svg" % (key, name)] = build_section(label, t)
+
+    for fname, content in sorted(files.items()):
         with open(os.path.join(ASSET_DIR, fname), "w", encoding="utf-8") as f:
             f.write(content)
-        print("wrote assets/%s (%d KB)" % (fname, len(content) // 1024))
+        print("wrote assets/%-28s %3d KB" % (fname, len(content) // 1024))
 
 
 if __name__ == "__main__":
