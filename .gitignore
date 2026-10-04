@@ -1,0 +1,5 @@
+# personal documents — must NOT be published (contains phone number & address)
+CV_*.pdf
+
+# local preview scratch space
+.preview/

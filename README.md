@@ -1,166 +1,123 @@
 <div align="center">
-
-<!-- Header banner -->
-<img src="https://capsule-render.vercel.app/api?type=waving&color=gradient&customColorList=6,11,20&height=200&section=header&text=Alfian%20Eka%20Maulana&fontSize=48&fontColor=ffffff&animation=fadeIn&fontAlignY=38&desc=Fullstack%20Developer%20%7C%20IT%20Enthusiast&descAlignY=58&descSize=18" />
-
-<!-- Typing animation -->
-<a href="https://alfianmaulana.me">
-  <img src="https://readme-typing-svg.demolab.com?font=Fira+Code&weight=600&size=22&pause=1000&color=2E9EF7&center=true&vCenter=true&width=600&lines=Fullstack+Developer+%F0%9F%92%BB;Software+Development+%7C+Cloud+%7C+Project+Management;Building+modern%2C+scalable+%26+user-centric+products;Always+learning%2C+always+shipping+%F0%9F%9A%80" alt="Typing SVG" />
-</a>
-
-<!-- Social badges -->
-<a href="https://alfianmaulana.me"><img src="https://img.shields.io/badge/Portfolio-alfianmaulana.me-2E9EF7?style=for-the-badge&logo=googlechrome&logoColor=white" /></a>
-<a href="https://www.linkedin.com/in/alfianekamaulana"><img src="https://img.shields.io/badge/LinkedIn-Alfian%20Eka%20Maulana-0A66C2?style=for-the-badge&logo=linkedin&logoColor=white" /></a>
-<a href="mailto:alfianmaulana114@gmail.com"><img src="https://img.shields.io/badge/Email-alfianmaulana114@gmail.com-EA4335?style=for-the-badge&logo=gmail&logoColor=white" /></a>
-<a href="https://github.com/alfianmaulana114"><img src="https://img.shields.io/badge/GitHub-alfianmaulana114-181717?style=for-the-badge&logo=github&logoColor=white" /></a>
-
+  <img src="assets/header.svg" alt="Alfian Eka Maulana - Fullstack Developer" width="100%">
 </div>
 
----
+<img src="assets/divider.svg" width="100%" alt="">
 
-## <img src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Hand%20gestures/Waving%20Hand.png" width="28" /> Tentang Saya
+<img src="assets/section-about.svg" alt="About me">
 
-```typescript
-const alfian = {
-  role: "Fullstack Developer",
-  location: "Indonesia 🇮🇩",
-  education: "S1 Sistem Informasi — Universitas Bina Sarana Informatika",
-  focus: ["Software Development", "Cloud Computing", "Project Management"],
-  techStack: {
-    frontend: ["React", "Next.js", "TypeScript", "Flutter", "Vite"],
-    backend:  ["Node.js", "Laravel", "PHP", "Python"],
-    database: ["MySQL", "Supabase"],
-    cloud:    ["Google Cloud Platform"],
-  },
-  currentlyLearning: "Scalable architecture & cloud-native apps",
-  funFact: "Pernah ngajar pemrograman Laravel ke siswa SMK 🧑‍🏫",
-};
-```
+Fullstack developer focused on building and shipping web applications **end to end** —
+from database design and backend to frontend and deployment.
 
-Seorang **IT Enthusiast** yang terus mengeksplorasi dan menciptakan solusi teknologi inovatif. Fokus pada pengembangan produk digital yang **modern, scalable, dan user-centric** — dari perancangan arsitektur hingga deployment.
+I enjoy turning real problems into products that actually get used, and I'm currently
+going deeper into **cloud** and **scalable architecture**. Outside of code, I've led an
+editorial team and mentored students in web development.
 
----
+<img src="assets/divider.svg" width="100%" alt="">
 
-## <img src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Objects/Hammer%20and%20Wrench.png" width="28" /> Tech Stack
+<img src="assets/section-stack.svg" alt="Tech stack">
+
+**Languages**
+
+![PHP](https://img.shields.io/badge/PHP-3DDCFF?style=for-the-badge&logo=php&logoColor=111111)
+![JavaScript](https://img.shields.io/badge/JAVASCRIPT-3DDCFF?style=for-the-badge&logo=javascript&logoColor=111111)
+![TypeScript](https://img.shields.io/badge/TYPESCRIPT-3DDCFF?style=for-the-badge&logo=typescript&logoColor=111111)
+
+**Frameworks**
+
+![Laravel](https://img.shields.io/badge/LARAVEL-A8FF3E?style=for-the-badge&logo=laravel&logoColor=111111)
+![Next.js](https://img.shields.io/badge/NEXT.JS-A8FF3E?style=for-the-badge&logo=nextdotjs&logoColor=111111)
+![Tailwind CSS](https://img.shields.io/badge/TAILWIND_CSS-A8FF3E?style=for-the-badge&logo=tailwindcss&logoColor=111111)
+
+**Databases**
+
+![MySQL](https://img.shields.io/badge/MYSQL-FFD23F?style=for-the-badge&logo=mysql&logoColor=111111)
+![PostgreSQL](https://img.shields.io/badge/POSTGRESQL-FFD23F?style=for-the-badge&logo=postgresql&logoColor=111111)
+![SQLite](https://img.shields.io/badge/SQLITE-FFD23F?style=for-the-badge&logo=sqlite&logoColor=111111)
+![Redis](https://img.shields.io/badge/REDIS-FFD23F?style=for-the-badge&logo=redis&logoColor=111111)
+
+**Practices**
+
+![REST APIs](https://img.shields.io/badge/REST_APIS-FF5CA8?style=for-the-badge&logoColor=111111)
+![MVC](https://img.shields.io/badge/MVC_ARCHITECTURE-FF5CA8?style=for-the-badge&logoColor=111111)
+![Database Design](https://img.shields.io/badge/DATABASE_DESIGN-FF5CA8?style=for-the-badge&logoColor=111111)
+![Git](https://img.shields.io/badge/GIT-FF5CA8?style=for-the-badge&logo=git&logoColor=111111)
+
+**Tools**
+
+![GitHub](https://img.shields.io/badge/GITHUB-FF8A3D?style=for-the-badge&logo=github&logoColor=111111)
+![Jira](https://img.shields.io/badge/JIRA-FF8A3D?style=for-the-badge&logo=jira&logoColor=111111)
+![Trello](https://img.shields.io/badge/TRELLO-FF8A3D?style=for-the-badge&logo=trello&logoColor=111111)
+![Power BI](https://img.shields.io/badge/POWER_BI-FF8A3D?style=for-the-badge&logo=powerbi&logoColor=111111)
+
+<img src="assets/divider.svg" width="100%" alt="">
+
+<img src="assets/section-experience.svg" alt="Experience">
+
+**Web Development Mentor** — SMKN 20 Jakarta · *Internship*
+`Oct 2025 – Jan 2026`
+
+- Mentored software engineering students in Laravel web development.
+- Guided end-to-end development of web applications using clean, maintainable practices.
+
+**Head of Editorial Division** — UKM Jurnalistik
+`Mar 2025 – Mar 2026`
+
+- Led the editorial team to plan and publish content consistently.
+- Coordinated cross-division collaboration to improve content strategy and reach.
+
+**Digital Archive & Documentation** — Museum Nasional Indonesia · *Internship*
+`Jul 2022 – Oct 2022`
+
+- Organized digital archives and multimedia assets to improve accessibility.
+- Maintained documentation workflows for internal and external publications.
+
+<img src="assets/divider.svg" width="100%" alt="">
+
+<img src="assets/section-projects.svg" alt="Projects">
+
+### Paragraf Muda
+`Fullstack Web` `Laravel` `MySQL`
+
+A production news portal with an integrated organization management system — built and
+deployed end to end, from database design to hosting.
+
+[![Live](https://img.shields.io/badge/LIVE-paragrafmuda.com-3DDCFF?style=for-the-badge&logo=googlechrome&logoColor=111111)](https://paragrafmuda.com/)
+
+### SIPARA
+`Project Manager` `Laravel` `MVP`
+
+A financial web application MVP with secure transaction handling and automated financial
+reporting. Registered under national copyright protection (DJKI).
+
+[![Repo](https://img.shields.io/badge/REPO-Sipara-FF5CA8?style=for-the-badge&logo=github&logoColor=111111)](https://github.com/alfianmaulana114/Sipara)
+
+<img src="assets/divider.svg" width="100%" alt="">
+
+<img src="assets/section-achievements.svg" alt="Achievements">
+
+**Education**
+
+- **Universitas Bina Sarana Informatika** — S1 Information Systems · GPA 3.87/4.00
+  `2023 – 2027`
+
+**Achievements & Certificates**
+
+- **1st Place** — UBSI IT Bootcamp 2025 · Project Manager for SIPARA
+- **Program Analyst** — BNSP Competency Assessment · Declared Competent
+- **Project Management Fundamental** — Digital Talent Scholarship, KOMDIGI · 2025
+
+<img src="assets/divider.svg" width="100%" alt="">
 
 <div align="center">
 
-**Frontend & Mobile**
+<img src="assets/section-contact.svg" alt="Contact">
 
-![TypeScript](https://img.shields.io/badge/TypeScript-3178C6?style=for-the-badge&logo=typescript&logoColor=white)
-![React](https://img.shields.io/badge/React-61DAFB?style=for-the-badge&logo=react&logoColor=black)
-![Next.js](https://img.shields.io/badge/Next.js-000000?style=for-the-badge&logo=nextdotjs&logoColor=white)
-![Flutter](https://img.shields.io/badge/Flutter-02569B?style=for-the-badge&logo=flutter&logoColor=white)
-![Vite](https://img.shields.io/badge/Vite-646CFF?style=for-the-badge&logo=vite&logoColor=white)
+Open to new projects, creative ideas, and career opportunities in tech.
 
-**Backend & Database**
-
-![Node.js](https://img.shields.io/badge/Node.js-339933?style=for-the-badge&logo=nodedotjs&logoColor=white)
-![Laravel](https://img.shields.io/badge/Laravel-FF2D20?style=for-the-badge&logo=laravel&logoColor=white)
-![PHP](https://img.shields.io/badge/PHP-777BB4?style=for-the-badge&logo=php&logoColor=white)
-![Python](https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=python&logoColor=white)
-![MySQL](https://img.shields.io/badge/MySQL-4479A1?style=for-the-badge&logo=mysql&logoColor=white)
-![Supabase](https://img.shields.io/badge/Supabase-3ECF8E?style=for-the-badge&logo=supabase&logoColor=white)
-
-**Cloud & Tools**
-
-![Google Cloud](https://img.shields.io/badge/Google_Cloud-4285F4?style=for-the-badge&logo=googlecloud&logoColor=white)
-![Git](https://img.shields.io/badge/Git-F05032?style=for-the-badge&logo=git&logoColor=white)
-![GitHub](https://img.shields.io/badge/GitHub-181717?style=for-the-badge&logo=github&logoColor=white)
-
-<br/>
-
-<img src="https://skillicons.dev/icons?i=ts,react,nextjs,flutter,vite,nodejs,laravel,php,python,mysql,supabase,gcp,git,github&theme=dark" />
-
-</div>
-
----
-
-## <img src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Objects/Bar%20Chart.png" width="28" /> GitHub Stats
-
-<div align="center">
-
-<img height="180em" src="https://github-readme-stats.vercel.app/api?username=alfianmaulana114&show_icons=true&theme=tokyonight&include_all_commits=true&count_private=true&hide_border=true" />
-<img height="180em" src="https://github-readme-stats.vercel.app/api/top-langs/?username=alfianmaulana114&layout=compact&theme=tokyonight&hide_border=true&langs_count=8" />
-
-<br/>
-
-<img src="https://github-readme-streak-stats.herokuapp.com/?user=alfianmaulana114&theme=tokyonight&hide_border=true" />
-
-<br/>
-
-<img src="https://github-profile-trophy.vercel.app/?username=alfianmaulana114&theme=tokyonight&no-frame=true&row=1&column=6" />
-
-</div>
-
----
-
-## <img src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Objects/Laptop.png" width="28" /> Proyek Unggulan
-
-<table>
-<tr>
-<td width="50%" valign="top">
-
-### 🏆 Paragraf Muda
-**Software Engineer** · *Juara Proyek Terbaik*
-
-Solusi digital berbasis web untuk transparansi finansial tingkat RT.
-
-<a href="https://paragrafmuda.com/"><img src="https://img.shields.io/badge/Live-paragrafmuda.com-2E9EF7?style=flat-square&logo=googlechrome&logoColor=white" /></a>
-
-</td>
-<td width="50%" valign="top">
-
-### 📋 Sipara
-**Project Manager**
-
-Platform digital untuk transparansi & pengelolaan data tingkat komunitas.
-
-</td>
-</tr>
-<tr>
-<td width="50%" valign="top">
-
-### 📱 Social Detox
-**System Analyst**
-
-Aplikasi mobile — analisis kebutuhan pengguna & perancangan sistem.
-
-</td>
-<td width="50%" valign="top">
-
-### ✅ MyTugas
-**Software Developer**
-
-Platform manajemen tugas — transformasi kebutuhan fungsional jadi kode.
-
-</td>
-</tr>
-</table>
-
----
-
-## <img src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Objects/Trophy.png" width="28" /> Sertifikasi
-
-- **Project Management** — Fresh Graduate Academy, Digital Talent Scholarship KOMDIGI (2025)
-- **Google Cloud Skill Boost** — Level 1, 2 & 3, Google (2025)
-- **KKNI Level II Multimedia** — BNSP (2023)
-- **Pemrograman JavaScript** — Dicoding Indonesia (2023)
-
----
-
-<div align="center">
-
-## <img src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Hand%20gestures/Handshake.png" width="28" /> Hubungi Saya
-
-Mari terhubung — gw selalu terbuka untuk proyek baru, ide kreatif, maupun peluang karir di bidang teknologi.
-
-<a href="https://www.linkedin.com/in/alfianekamaulana"><img src="https://img.shields.io/badge/LinkedIn-0A66C2?style=for-the-badge&logo=linkedin&logoColor=white" /></a>
-<a href="mailto:alfianmaulana114@gmail.com"><img src="https://img.shields.io/badge/Email-EA4335?style=for-the-badge&logo=gmail&logoColor=white" /></a>
-<a href="https://alfianmaulana.me"><img src="https://img.shields.io/badge/Website-2E9EF7?style=for-the-badge&logo=googlechrome&logoColor=white" /></a>
-
-<br/><br/>
-
-<img src="https://capsule-render.vercel.app/api?type=waving&color=gradient&customColorList=6,11,20&height=120&section=footer" />
+[![Portfolio](https://img.shields.io/badge/PORTFOLIO-alfianmaulana.me-FFD23F?style=for-the-badge&logo=googlechrome&logoColor=111111)](https://alfianmaulana.me)
+[![LinkedIn](https://img.shields.io/badge/LINKEDIN-alfianekamaulana-3DDCFF?style=for-the-badge&logo=linkedin&logoColor=111111)](https://www.linkedin.com/in/alfianekamaulana)
+[![GitHub](https://img.shields.io/badge/GITHUB-alfianmaulana114-A8FF3E?style=for-the-badge&logo=github&logoColor=111111)](https://github.com/alfianmaulana114)
+[![Email](https://img.shields.io/badge/EMAIL-alfianmaulana114@gmail.com-FF5CA8?style=for-the-badge&logo=gmail&logoColor=111111)](mailto:alfianmaulana114@gmail.com)
 
 </div>
