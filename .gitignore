@@ -3,3 +3,7 @@ CV_*.pdf
 
 # local preview scratch space
 .preview/
+
+# python bytecode
+__pycache__/
+*.pyc
