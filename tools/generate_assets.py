@@ -35,14 +35,14 @@ THEMES = {
                   muted="#8B949E", line="#30363D", shadow="#30363D", accent="#3B82F6"),
 }
 
-# flat, ordered list -> rendered as a uniform 5 x 3 grid
+# flat, ordered list -> rendered as a compact 7-column grid (last row centred)
 STACK_ITEMS = [
     ("php", "PHP"), ("javascript", "JavaScript"), ("typescript", "TypeScript"),
-    ("laravel", "Laravel"), ("nextdotjs", "Next.js"),
-    ("tailwindcss", "Tailwind CSS"), ("mysql", "MySQL"), ("postgresql", "PostgreSQL"),
-    ("sqlite", "SQLite"), ("redis", "Redis"),
-    ("git", "Git"), ("github", "GitHub"), ("jira", "Jira"), ("trello", "Trello"),
-    ("powerbi", "Power BI"),
+    ("python", "Python"), ("laravel", "Laravel"), ("nextdotjs", "Next.js"),
+    ("nuxt", "Nuxt"), ("flutter", "Flutter"), ("tailwindcss", "Tailwind"),
+    ("nodedotjs", "Node.js"), ("mysql", "MySQL"), ("postgresql", "PostgreSQL"),
+    ("sqlite", "SQLite"), ("redis", "Redis"), ("git", "Git"), ("github", "GitHub"),
+    ("jira", "Jira"), ("trello", "Trello"), ("powerbi", "Power BI"),
 ]
 
 SECTIONS = [("about", "ABOUT_ME"), ("stack", "TECH_STACK"),
@@ -153,55 +153,6 @@ def build_header(t):
                font_face_css(t["_psp"], t["_vt"], extra))
 
 
-# ------------------------------------------------------ animated typing ---
-def build_typing(t):
-    """Typewriter line, one <text> per character with its own opacity
-    keyframes. Deliberately avoids SMIL, <mask> and CSS `width` inside
-    <clipPath>: none of those animate when the SVG is loaded through <img>
-    (which is exactly how GitHub renders README images)."""
-    line = "building & shipping web apps end to end"
-    size, prompt, dur = 28, ">", 7
-    n = len(line)
-    w_prompt = text_width(VT_TTF, prompt, size)
-    tx = w_prompt + 12
-
-    xs, x = [], tx
-    for ch in line:
-        xs.append(x)
-        x += text_width(VT_TTF, ch, size)
-    line_w = x - tx
-    W, H, ty = int(tx + line_w + 24), 46, 33
-
-    rules, elems = [], []
-    for i, ch in enumerate(line):
-        a = 45.0 * (i + 1) / n                      # appears
-        v = 82.0 + 16.0 * (n - i) / n               # disappears (reverse order)
-        rules.append("@keyframes c%d{0%%{opacity:0}%.2f%%{opacity:0}%.2f%%{opacity:1}"
-                     "%.2f%%{opacity:1}%.2f%%{opacity:0}100%%{opacity:0}}"
-                     % (i, max(a - 0.05, 0.0), a, v, v + 0.05))
-        rules.append(".c%d{animation:c%d %ds infinite;}" % (i, i, dur))
-        if ch.strip():
-            elems.append('<text class="vt c%d" x="%.1f" y="%d" font-size="%d" '
-                         'fill="%s">%s</text>' % (i, xs[i], ty, size, t["muted"], esc(ch)))
-
-    # the cursor rides along with the text instead of sitting at the far end
-    rules.append("@keyframes cur{0%%{transform:translateX(0);"
-                 "animation-timing-function:steps(%d,end)}"
-                 "45%%{transform:translateX(%.1fpx);animation-timing-function:linear}"
-                 "82%%{transform:translateX(%.1fpx);animation-timing-function:steps(%d,end)}"
-                 "100%%{transform:translateX(0)}}" % (n, line_w, line_w, n))
-    rules.append(".cursor{animation:cur %ds infinite,blink 1.1s steps(1) infinite;}" % dur)
-
-    css = font_face_css(t["_psp"], t["_vt"],
-        "@keyframes blink{0%,49%{opacity:1}50%,100%{opacity:0}}" + "".join(rules))
-    b = [
-        text(0, ty, prompt, size, t["accent"], "vt", "start"),
-        "".join(elems),
-        rect(tx, ty - 20, 10, 22, t["accent"], cls="cursor"),
-    ]
-    return svg(W, H, "typing", "".join(b), css)
-
-
 # ---------------------------------------------------------------- section ---
 def build_section(label, t, width=280):
     b = [
@@ -221,18 +172,19 @@ def build_divider(t):
 
 # ------------------------------------------------------------- tech grid ---
 def build_stack(icons, t):
-    cols, cell, size, label = 5, 160, 26, 11
-    row = 78
+    cols, cell, size, label = 7, 110, 22, 9
+    row = 58
     rows = (len(STACK_ITEMS) + cols - 1) // cols
     W, H = cols * cell, rows * row + 6
     b = []
     for i, (slug, name) in enumerate(STACK_ITEMS):
         r, c = divmod(i, cols)
-        cx = c * cell + cell / 2
-        iy = r * row + 14
+        in_row = min(cols, len(STACK_ITEMS) - r * cols)   # centre a partial last row
+        cx = (cols - in_row) * cell / 2 + c * cell + cell / 2
+        iy = r * row + 12
         b.append('<g transform="translate(%g,%g) scale(%g)"><path d="%s" fill="%s"/></g>'
                  % (cx - size / 2, iy, size / 24.0, icons[slug], t["text"]))
-        b.append(text(cx, iy + size + 16, name, label, t["text"]))
+        b.append(text(cx, iy + size + 13, name, label, t["text"]))
     return svg(W, H, "Tech stack", "".join(b), psp_css(t["_psp"]))
 
 
@@ -245,15 +197,12 @@ def main():
                             "".join(n for _, n in STACK_ITEMS) +
                             "ALFIANEKMAULNABCDEFGHIJKLMNOPQRSTUVWXYZ_")
     vt = font_to_woff2_b64(VT_TTF,
-                           "alfian@github:~$ whoami Fullstack Developer Jakarta Indonesia "
-                           "github.com/alfianmaulana114  \u00b7  alfianmaulana.me "
-                           "> building & shipping web apps end to end")
+                           "alfian@github:~$ whoami Fullstack Developer Jakarta Indonesia  \u00b7 ")
 
     files = {}
     for name, t in THEMES.items():
         t = dict(t, _psp=psp, _vt=vt)
         files["header-%s.svg" % name] = build_header(t)
-        files["typing-%s.svg" % name] = build_typing(t)
         files["divider-%s.svg" % name] = build_divider(t)
         files["stack-%s.svg" % name] = build_stack(icons, t)
         for key, label in SECTIONS:

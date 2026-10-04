@@ -4,11 +4,6 @@
 </picture>
 
 <picture>
-  <source media="(prefers-color-scheme: dark)" srcset="assets/typing-dark.svg">
-  <img src="assets/typing-light.svg" alt="building &amp; shipping web apps end to end">
-</picture>
-
-<picture>
   <source media="(prefers-color-scheme: dark)" srcset="assets/divider-dark.svg">
   <img src="assets/divider-light.svg" alt="" width="100%">
 </picture>
@@ -22,8 +17,7 @@ Fullstack developer focused on building and shipping web applications **end to e
 from database design and backend to frontend and deployment.
 
 I enjoy turning real problems into products that actually get used, and I'm currently
-going deeper into **cloud** and **scalable architecture**. Outside of code, I've led an
-editorial team and mentored students in web development.
+going deeper into **cloud** and **scalable architecture**.
 
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset="assets/section-stack-dark.svg">
@@ -32,7 +26,7 @@ editorial team and mentored students in web development.
 
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset="assets/stack-dark.svg">
-  <img src="assets/stack-light.svg" alt="PHP, JavaScript, TypeScript, Laravel, Next.js, Tailwind CSS, MySQL, PostgreSQL, SQLite, Redis, Git, GitHub, Jira, Trello, Power BI">
+  <img src="assets/stack-light.svg" alt="PHP, JavaScript, TypeScript, Python, Laravel, Next.js, Nuxt, Flutter, Tailwind, Node.js, MySQL, PostgreSQL, SQLite, Redis, Git, GitHub, Jira, Trello, Power BI">
 </picture>
 
 <picture>
@@ -48,13 +42,6 @@ editorial team and mentored students in web development.
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset="https://github-readme-stats.vercel.app/api/top-langs/?username=alfianmaulana114&layout=compact&hide_border=true&langs_count=8&bg_color=0D1117&title_color=3B82F6&text_color=F0F6FC">
   <img height="165" src="https://github-readme-stats.vercel.app/api/top-langs/?username=alfianmaulana114&layout=compact&hide_border=true&langs_count=8&bg_color=FFFFFF&title_color=2563EB&text_color=111111" alt="Top languages">
-</picture>
-</p>
-
-<p align="center">
-<picture>
-  <source media="(prefers-color-scheme: dark)" srcset="https://streak-stats.demolab.com/?user=alfianmaulana114&hide_border=true&background=0D1117&border=30363D&stroke=F0F6FC&ring=3B82F6&fire=3B82F6&currStreakNum=F0F6FC&sideNums=F0F6FC&currStreakLabel=3B82F6&sideLabels=8B949E&dates=8B949E">
-  <img src="https://streak-stats.demolab.com/?user=alfianmaulana114&hide_border=true&background=FFFFFF&border=D0D7DE&stroke=111111&ring=2563EB&fire=2563EB&currStreakNum=111111&sideNums=111111&currStreakLabel=2563EB&sideLabels=57606A&dates=57606A" alt="GitHub streak">
 </picture>
 </p>
 
