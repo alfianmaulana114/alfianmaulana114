@@ -13,7 +13,7 @@
   <img src="assets/section-about-light.svg" alt="About">
 </picture>
 
-Fullstack developer focused on building and shipping web applications **end to end** —
+Fullstack developer focused on building and shipping web applications **end to end** 
 from database design and backend to frontend and deployment.
 
 I enjoy turning real problems into products that actually get used, and I'm currently
